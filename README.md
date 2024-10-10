@@ -1,11 +1,12 @@
 # server 
 My Resources about servers
 
-### NGINX TUTORIAL
+### NGINX - Installation and Usage
 ```sh
 1. Install NGINX and PHP-FPM
 kaito@coding~$ sudo apt install nginx php-fpm
-2. Configure nginx
+
+2. Configure nginx and create web server with port 80
 kaito@coding~$ sudo nano /etc/nginx/sites-available/default
 
 server {
