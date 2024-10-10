@@ -1,5 +1,5 @@
 # server 
-My Resources about servers
+This is all about Servers and Programming
 
 ### NGINX - Installation and Usage
 
