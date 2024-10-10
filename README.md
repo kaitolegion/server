@@ -33,3 +33,21 @@ kaito@coding~$ sudo nginx -t
 4. Restart nginx
 kaito@coding~$ sudo systemctl restart nginx
 ```
+
+### PM2 - Installation 
+what is pm2? 
+- PM2 is a popular process manager for Node.js applications that makes it easier to keep applications running, manage them, and perform various operations such as monitoring, clustering, and logging. Here are some of the key features and benefits of using PM2.
+Install pm2
+```sh
+npm install pm2 -g
+```
+
+| pm2 command          | Description   |
+| ------------- | ------------- |
+| `pm2 start "npm run dev" `        | Start application |
+| `pm2 list`         | to check list running  |
+| `pm2 stop <app-name-or-id>` | to stop |
+| `pm2 restart <app-name-or-id>`  | to restart  |
+| `pm2 delete <app-name-or-id>` |  to delete |
+| `pm2 logs <id>`  | see logs |
+
