@@ -2,13 +2,17 @@
 My Resources about servers
 
 ### NGINX - Installation and Usage
-```sh
+
 1. Install NGINX and PHP-FPM
+```sh
 kaito@coding~$ sudo apt install nginx php-fpm
-
-2. Configure nginx and create web server with port 80
+```
+3. Configure nginx and create web server with port 80
+```sh
 kaito@coding~$ sudo nano /etc/nginx/sites-available/default
-
+```
+Edit and save
+```sh
 server {
     listen 80;  # Listen on port 80
     root /var/www/html;  # This is root directory
@@ -26,11 +30,13 @@ server {
         deny all;  # Deny access to .htaccess files
     }
 }
-
+```
 3. Test nginx configuration
+```sh
 kaito@coding~$ sudo nginx -t
-
-4. Restart nginx
+```
+5. Restart nginx
+```bash
 kaito@coding~$ sudo systemctl restart nginx
 ```
 
