@@ -57,3 +57,89 @@ npm install pm2 -g
 | `pm2 delete <app-name-or-id>` |  to delete |
 | `pm2 logs <id>`  | see logs |
 
+# Docker Composer 
+Docker Compose is a tool for defining and running multi-container Docker applications. It allows you to configure your application's services in a YAML file called docker-compose.yml, making it easier to manage and deploy containerized applications.
+
+| Commands          | Description   |
+| ------------- | ------------- |
+| docker-compose up        | Start services |
+| docker-compose up -d     | start services in the background  |
+| docker-compose stop      | Stop services  |
+| docker-compose down      | Stop and remove containers, networks, images, and volumes |
+| docker-compose logs      | View service logs |
+| docker-compose scale <service>=<number>      | Scale service |
+| docker-compose restart      | Restart service |
+| docker-compose build      | Build services |
+| docker-compose ps      | List containers |
+| docker-compose run <service> <command>      | Run a one-off command on a service |
+| docker-compose help      | Display help |
+
+Example build sample project and deploy in docker
+
+Project folder tree
+
+
+    .
+    ├── ...
+    ├── .docker                    # hidden dir for docker
+    │   ├── nginx                  # nginx configuration
+    │   ├── default.conf           # default configuration for nginx
+    │   ├── Dockerfile             # here the Dockerfile
+    │   └── ...                    # etc.
+    ├── src                        # Directory 
+    │   ├── index.php              # Your home page
+    ├── docker-compose.yml         # here the docker compose file
+    └── ...
+
+> docker-compose.yml
+```yml
+version: '3'
+services:
+    nginx:
+        build:
+            context: .
+            dockerfile: .docker/nginx/Dockerfile
+        volumes:
+            - ./src/:/var/www/html
+        image: nginx:alpine
+        ports:
+            - '8080:80  # 8080 is the port you want to use | 80 port of the server
+        networks:
+            - internal
+    php:
+        image: php:fpm-alpine
+        volumes:
+            - ./src/:/var/www/html
+        networks:
+            - internal
+networks:
+    internal:
+        driver: bridge
+```
+> default.conf
+```conf
+server {
+    listen 0.0.0.0:80';
+    root /var/www/html;
+    location / {
+        index index.php index.html;
+    }
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+    }
+}
+```
+
+> Dockerfile
+```Dockerfile
+FROM nginx:alpine
+ADD .docker/nginx/default.conf /etc/nginx/conf.d
+```
+BUILD Docker
+```sh
+docker compose build && docker compose up -d
+```
+
